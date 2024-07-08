@@ -33,7 +33,7 @@ pip install instaloader pyfiglet termcolor
 3. Run the script:
 
 ```bash
-python download_reel.py
+python3 insta.py
 ```
 
 4. Follow the prompts to enter your Instagram username and password, and the URL of the Instagram Reel you want to download.

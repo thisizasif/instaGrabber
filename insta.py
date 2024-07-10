@@ -31,10 +31,14 @@ def download_instagram_reel():
     # Prompt for Instagram credentials if session file does not exist
     if os.path.exists(session_file):
         print(colored("Session file found. Using existing session.", 'green'))
-        L.load_session_from_file(username=None, filename=session_file)
+        try:
+            L.load_session_from_file(filename=session_file)
+        except Exception as e:
+            print(colored(f"Failed to load session: {e}", 'red'))
+            return
     else:
         username = colored_input("Enter your Instagram username: ", 'blue')
-        password = getpass(colored("Enter your Instagram password: ", 'blue'))
+        password = getpass("Enter your Instagram password: ")  # getpass does not support colored prompts
         try:
             L.login(username, password)
             L.save_session_to_file(filename=session_file)
@@ -43,6 +47,9 @@ def download_instagram_reel():
             return
         except instaloader.exceptions.BadCredentialsException:
             print(colored("Invalid username or password.", 'red'))
+            return
+        except Exception as e:
+            print(colored(f"An unexpected error occurred: {e}", 'red'))
             return
 
     while True:
